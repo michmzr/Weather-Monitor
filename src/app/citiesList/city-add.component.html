@@ -1,0 +1,9 @@
+<form (ngSubmit)="onSubmit()" #cityAddForm="ngForm">
+    <div class="form-group">
+        <label for="cityName">City name</label>
+        <input type="text" class="form-control" name="cityName" [(ngModel)]="cityName" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+

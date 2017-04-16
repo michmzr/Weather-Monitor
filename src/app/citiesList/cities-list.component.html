@@ -1,0 +1,17 @@
+<div class="container">
+    <h1 class="page-title">List of cities</h1>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <city-add></city-add>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let city of cities">
+            <city-weather [name]="city"></city-weather>
+        </div>
+    </div>
+</div>
