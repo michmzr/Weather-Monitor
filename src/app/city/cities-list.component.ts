@@ -1,9 +1,9 @@
 /**
  * Created by Michał on 2017-04-02.
  */
-
 import {Component, OnInit} from "@angular/core";
 import {CitiesService} from "../shared/services/cities-service.service";
+import {City} from "../shared/models/city.model";
 
 @Component({
     selector: "cities-list",
@@ -12,7 +12,7 @@ import {CitiesService} from "../shared/services/cities-service.service";
 })
 export class CitiesListComponent implements OnInit
 {
-    cities: Array<string>;
+    cities: Array<City>;
 
     constructor(private citiesService: CitiesService)
     {
@@ -20,14 +20,9 @@ export class CitiesListComponent implements OnInit
 
     ngOnInit()
     {
-        this.cities = ["Elbląg"];
+        this.cities = [];
 
-        let cmp = this;
+        //todo observer
         this.citiesService.getList().then(cities => this.cities = cities);
-        this.citiesService.getList().then(cities =>
-        {
-            cmp.cities = cities;
-            console.debug(cities)
-        });
     }
 }

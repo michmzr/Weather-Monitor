@@ -1,17 +1,18 @@
 import {Component, Input, OnInit} from "@angular/core";
+import {City} from "../models/city.model";
 import construct = Reflect.construct;
 
 @Component({
-    selector: "city-weather",
-    templateUrl: "city-weather.component.html",
+    selector: "city-weather-block",
+    templateUrl: "city-weather-block.component.html",
 })
-export class CityWeatherComponent implements OnInit
+export class CityWeatherBlockComponent implements OnInit
 {
     constructor()
     {
     }
 
-    @Input() name: string;
+    @Input() city: City;
 
     temp: number = 6;
     date: Date;

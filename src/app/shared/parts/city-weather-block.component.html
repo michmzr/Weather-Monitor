@@ -1,7 +1,10 @@
 <div class="col-sm-4">
     <div class="weather card">
         <div class="flatWeatherPlugin full">
-            <h2>{{name}}</h2>
+            <h2>{{city.name}}</h2>
+
+            <a [routerLink]="['/cities/details', city.id]">details</a>
+
             <div class="wiToday">
                 <div class="wiIconGroup">
                     <div class="wi wi520">{{temp}}°</div>

@@ -1,42 +1,68 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-
+import {Http, RequestOptions, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
-
+import {City} from "../models/city.model";
 
 @Injectable()
-export class CitiesService
-{
+export class CitiesService {
     private citiesUrl = 'api/cities';  // URL to web api
 
-    cities: Array<string>;
+    private headers: Headers = new Headers({'Content-Type': 'application/json'});
 
-    constructor(private http: Http)
-    {
-        this.cities = ["Warsaw", "Berlin", "Paris", "Moscow", "London", "Tokio"];
+    private lastId: number = 0;
 
-        console.info(this.cities);
+    constructor(private http: Http) {
     }
 
-
-    getList(): Promise<string[]>
-    {
+    getList(): Promise<City[]> {
         return this.http.get(this.citiesUrl)
-        .toPromise()
-        .then(response => response.json().data as string[])
-        .catch(this.handleError);
+            .toPromise()
+            .then(
+                (response) => {
+                    let cities = response.json().data as City[];
+
+                    this.lastId = cities.length;
+
+                    return cities;
+                }
+            )
+            .catch(this.handleError);
     }
 
-    private handleError(error: any): Promise<any>
+    getCity(id: number): Promise<City> {
+        const url = `${this.citiesUrl}/${id}`;
+
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json().data as City)
+            .catch(this.handleError);
+    }
+
+    create(name: string): Promise<City> {
+        let options = new RequestOptions({headers: this.headers});
+
+        return this.http
+            .post(`${this.citiesUrl}`, JSON.stringify({name: name}), options)
+            .toPromise()
+            .then(
+                res => res.json().data as City
+            ).catch(this.handleError);
+    }
+
+    update(city: City): Promise<City>
     {
-        console.error('An error occurred', error); // for demo purposes only
+        const url = `${this.citiesUrl}/${city.id}`;
+
+        return this.http
+            .put(url, JSON.stringify(city), {headers: this.headers})
+            .toPromise()
+            .then(response => city)
+            .catch(this.handleError);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error);
+
         return Promise.reject(error.message || error);
-    }
-
-    addCity(cityName: string)
-    {
-        this.cities.push(cityName);
-
-        console.debug(`Added city ${cityName} `)
     }
 }
