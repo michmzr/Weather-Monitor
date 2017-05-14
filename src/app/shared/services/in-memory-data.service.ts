@@ -8,8 +8,8 @@ export class InMemoryDataService implements InMemoryDbService {
             new City(2, "Wałbrzych"),
             new City(3, "Toruń"),
             new City(4, "Inowrocław"),
-            new City(5, "Pekin"),
-            new City(6, "Paryż")
+            new City(5, "London", "GB"),
+            new City(6, "Paryż", "FR")
         ];
 
         return {cities};

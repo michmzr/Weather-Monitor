@@ -10,28 +10,35 @@ import {City} from "../shared/models/city.model";
     templateUrl: "city-details.component.html",
     providers: [CitiesService]
 })
-export class CityDetailsComponent implements OnInit {
+export class CityDetailsComponent implements OnInit
+{
     constructor(private citiesService: CitiesService,
                 private route: ActivatedRoute,
-                private location: Location) {
+                private location: Location)
+    {
     }
 
     city: City;
+    weather: Object;
 
-    ngOnInit(): void {
+    ngOnInit(): void
+    {
         this.route.params
             .switchMap((params: Params) => this.citiesService.getCity(+params['id']))
-            .subscribe((city) => {
-                this.city = city
+            .subscribe((city) =>
+            {
+                this.city = city;
             });
     }
 
-    save(): void {
+    save(): void
+    {
         this.citiesService.update(this.city)
             .then(() => this.goBack());
     }
 
-    goBack(): void {
+    goBack(): void
+    {
         this.location.back();
     }
 }

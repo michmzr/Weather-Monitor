@@ -34,7 +34,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot(
         HomeModule,
         CitiesModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService, {
-            delay: 50, rootPath: 'api/'
+            delay: 50, rootPath: 'db/', passThruUnknownUrl: true
         }),
         rootRouting,
         SharedModule

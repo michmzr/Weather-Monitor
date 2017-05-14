@@ -3,6 +3,7 @@ import {CitiesService} from "../shared/services/cities-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {City} from "../shared/models/city.model";
+import {EventsService} from "../shared/services/events-service.service";
 
 @Component({
     selector: "city-add",
@@ -14,7 +15,9 @@ export class CityAddComponent implements OnInit
     constructor(private citiesService: CitiesService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private location: Location) {
+                private eventsService: EventsService,
+                private location: Location)
+    {
     }
 
     ngOnInit(): void
@@ -32,7 +35,10 @@ export class CityAddComponent implements OnInit
         this.cityName = "";
 
         this.citiesService.create(cityName).then(
-            (city: City) => this.router.navigate(['/cities/details', city.id])
+            (city: City) =>
+            {
+                this.cityName = ""
+            }
         );
     }
 }

@@ -147,3 +147,5 @@ typings/
 
 src/app/header/
 /node_modules/
+/src/environments/environment.local.ts
+/src/app/city/city.component.js

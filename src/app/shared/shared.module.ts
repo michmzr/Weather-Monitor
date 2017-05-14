@@ -11,7 +11,6 @@ import {CityDetailsComponent} from "../city/city-details.component";
 import {CityWeatherBlockComponent} from "./parts/city-weather-block.component";
 import {CitiesListComponent} from "../city/cities-list.component";
 
-
 @NgModule({
     imports: [
         CommonModule,
@@ -24,13 +23,14 @@ import {CitiesListComponent} from "../city/cities-list.component";
         CitiesListComponent,
         CityWeatherBlockComponent,
         CityDetailsComponent,
-        CityAddComponent
+        CityAddComponent,
     ],
     exports: [
         CitiesListComponent,
         CityWeatherBlockComponent,
         CityDetailsComponent,
         CityAddComponent,
+
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

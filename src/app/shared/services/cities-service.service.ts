@@ -2,19 +2,24 @@ import {Injectable} from "@angular/core";
 import {Http, RequestOptions, Headers} from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import {City} from "../models/city.model";
+import {EventsService} from "./events-service.service";
 
 @Injectable()
-export class CitiesService {
-    private citiesUrl = 'api/cities';  // URL to web api
+export class CitiesService
+{
+    private citiesUrl = 'db/cities';  // URL to web api
 
     private headers: Headers = new Headers({'Content-Type': 'application/json'});
 
     private lastId: number = 0;
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private eventsService: EventsService,)
+    {
     }
 
-    getList(): Promise<City[]> {
+    getList(): Promise<City[]>
+    {
         return this.http.get(this.citiesUrl)
             .toPromise()
             .then(
@@ -29,7 +34,8 @@ export class CitiesService {
             .catch(this.handleError);
     }
 
-    getCity(id: number): Promise<City> {
+    getCity(id: number): Promise<City>
+    {
         const url = `${this.citiesUrl}/${id}`;
 
         return this.http.get(url)
@@ -38,14 +44,23 @@ export class CitiesService {
             .catch(this.handleError);
     }
 
-    create(name: string): Promise<City> {
+    create(name: string): Promise<City>
+    {
         let options = new RequestOptions({headers: this.headers});
 
         return this.http
             .post(`${this.citiesUrl}`, JSON.stringify({name: name}), options)
             .toPromise()
             .then(
-                res => res.json().data as City
+                (res) =>
+                {
+                    let city = res.json().data as City;
+
+                    this.eventsService.broadcast('city-added', city);
+
+                    return city
+
+                }
             ).catch(this.handleError);
     }
 
